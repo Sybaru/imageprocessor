@@ -1,0 +1,44 @@
+List of possible commands:
+    load image-path name (loads an image into processor from file)
+    brighten value name newName (brightens/darkens image by value)
+    vertical-flip name newName (flips image vertically)
+    horizontal-flip name newName (flips image horizontally)
+    value-component name newName (greyscales image based on highest value)
+    red-component name newName (greyscales image based on the red component)
+    green-component name newName (greyscales image based on the green component)
+    blue-component name newName (greyscales image based on the blue component)
+    greyscale name newName (greyscales image based on luma)
+    sepia name newName (applies sepia filter to image)
+    blur name newName (blurs image)
+    sharpen name newName (sharpens image)
+    save image-path name (saves image to path)
+    -file filename (runs commands from a file)
+
+Conditions:
+To use any command other than -file, an image must be loaded first. This is done with load.
+
+
+Example use case:
+    load res/pigeon.ppm pigeon
+    brighten 10 pigeon pigeon-brighter
+    vertical-flip pigeon vert-pigeon
+    horizontal-flip vert-pigeon pigeon-vert-horiz
+    value-component vert-pigeon grey-vert-pigeon
+    red-component pigeon red-pigeon
+    green-component pigeon green-pigeon
+    blue-component pigeon blue-pigeon
+    greyscale pigeon luma-pigeon
+    sepia pigeon sepia-pigeon
+    blur pigeon blur-pigeon
+    sharpen pigeon sharp-pigeon
+    save resultImages/bright-pigeon.ppm pigeon-brighter
+    save resultImages/vert-pigeon.ppm vert-pigeon
+    save resultImages/pigeon-vert-horiz.ppm pigeon-vert-horiz
+    save resultImages/grey-vert-pigeon.ppm grey-vert-pigeon
+    load res/redGreyPigeon.ppm pigeon
+
+How to use the GUI
+launch the program through the command line or by double clicking the jar file.
+The file menu allows you to load or save an image.
+The edit menu gives you access to ways to manipulate the image.
+You can also manually enter text commands in the text box then hit run.

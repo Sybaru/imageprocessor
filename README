@@ -1,0 +1,136 @@
+Image Processor
+By Alan Zhan and Eghan Reihandra
+
+pigeon image sourced from:
+JJ Harrison (en.wikipedia.org/wiki/Columbidae#/media/File:Treron_vernans_male_-_Kent_Ridge_Park.jpg)
+Used under Creative Commons
+
+
+
+How to run:
+The imgprocessor package includes a RunScript class that can run a list of commands through a
+Processor Controller. To run the commands, simply run the imgprocessor.RunScript class on the
+command line with "-file res/arguments" after it.
+The commands are:
+    load res/pigeon.ppm pigeon
+    brighten 10 pigeon pigeon-brighter
+    vertical-flip pigeon vert-pigeon
+    horizontal-flip vert-pigeon pigeon-vert-horiz
+    value-component vert-pigeon grey-vert-pigeon
+    red-component pigeon red-pigeon
+    green-component pigeon green-pigeon
+    blue-component pigeon blue-pigeon
+    greyscale pigeon luma-pigeon
+    sepia pigeon sepia-pigeon
+    blur pigeon blur-pigeon
+    sharpen pigeon sharp-pigeon
+    save resultImages/bright-pigeon.ppm pigeon-brighter
+    save resultImages/vert-pigeon.ppm vert-pigeon
+    save resultImages/pigeon-vert-horiz.ppm pigeon-vert-horiz
+    save resultImages/grey-vert-pigeon.ppm grey-vert-pigeon
+    load res/redGreyPigeon.ppm pigeon
+
+These commands load the pigeon ppm file from res and creates four other images saved in resultImages
+The commands include brightening, flipping horizontally, flipping vertically, and greyscaling.
+It then overwrites the pigeon image in the controller with a different greyscaled pigeon image.
+
+If you would like to alter these commands or run your own, simply change the commands in the
+"scriptFile" file found in the res directory.
+
+How to Run Jar:
+Open a terminal in the res folder. Then, from there, type "java -jar ImgProcess.jar"
+Then, press enter then enter "-file scriptFile.txt"
+this will run similar commands to the one above (with different file paths) and place the new images
+in res/resultImages.
+
+List of possible commands:
+    load image-path name (loads an image into processor from file)
+    brighten value name newName (brightens/darkens image by value)
+    vertical-flip name newName (flips image vertically)
+    horizontal-flip name newName (flips image horizontally)
+    value-component name newName (greyscales image based on highest value)
+    red-component name newName (greyscales image based on the red component)
+    green-component name newName (greyscales image based on the green component)
+    blue-component name newName (greyscales image based on the blue component)
+    greyscale name newName (greyscales image based on luma)
+    sepia name newName (applies sepia filter to image)
+    blur name newName (blurs image)
+    sharpen name newName (sharpens image)
+    save image-path name (saves image to path)
+    -file filename (runs commands from a file)
+
+
+Description of Classes and Interfaces:
+
+Controller
+    ProcessorController: This interface represents a controller for a ProcessorModel.
+              The interface can be used to run a ProcessorModel from any Readable type input.
+    ProcessorControllerImpl: Implements the Runnable Interface.
+                Contains a method, run, that calls the ProcessorModel's loadImage method.
+                Load Loads an image into the processor and saves the image withing the controller.
+
+
+Model
+    ImageUtil: This class has one method that reads a ppm file into an int[][][] array.
+        The array represents the pixels of an image. This is used for creating an Image class
+        and for testing.
+
+    Image: This interface is used to represent an image. It has methods that return specific
+        information about the image
+    ImageImpl: This class implements the image interface. It stores the image information inside a
+        int[][][] array that represents the pixels of the image.
+
+    ProcessorModel: This interface represents an image processing model. It has functions that can
+        alter an Image. These functions are greyscaling, brightness, flipping, and saving.
+    ProcessorModelImpl: This class implements the ProcessorModel interface. It alters and saves
+        images. It can do all the functions of the ProcessorModel interface.
+
+    BetterProcessorModel: This interface represents an image processing model. It has the functions
+        of ProcessorModel but can additionally blur, sharpen, luma greyscale, or sepia an image.
+    BetterProcessorModelImpl: This class implements the BetterProcessorModel interface. It alters
+        and saves images. It can do all the functions of the BetterProcessorModel interface.
+
+    Brightness: This represents an interface that can change the brightness of images.
+        It has a method that changes an image's brightness.
+        Used by the ProcessorModel.
+    BrightnessImpl: Implements the Brightness interface.
+        Used to change the brightness of an image by each color value on the image.
+        Used by the ProcessorModel.
+
+    Flipper: This represents an interface that can flip the orientation of an image.
+        It has a method that can flip an image.  Used by the ProcessorModel.
+    AFlipper: Abstract class for a Flipper implementation. By default, flips an image vertically.
+        Used by the ProcessorModel.
+    HorizontalFlipperImpl: Extends the AFlipper abstract class.
+        Changes the flipHelper function to flip the image horizontally instead.
+        Used by the ProcessorModel.
+    VerticalFlipperImpl: Extends the AFlipper class. Flips an image vertically.
+    Used by the ProcessorModel.
+
+    Greyscale: This represents an interface that can convert an image into greyscale.
+        It contains one method that converts to greyscale. Used by the ProcessorModel.
+    AGreyscale: An abstract class implementing the Greyscale interface.
+        Converts an image into greyscale. Used by the ProcessorModel.
+    RedGreyscaleImpl: Extends the AGreyscale abstract class.
+        Converts an image into greyscale using the red-component of rgb. Used by the ProcessorModel.
+    GreenGreyscaleImpl: Extends the AGreyscale abstract class.
+        Converts an image into greyscale using the green-component of rgb. Used by the ProcessorModel.
+    BlueGreyscaleImpl: Extends the AGreyscale abstract class.
+        Converts an image into greyscale using the blue-component of rgb. Used by the ProcessorModel.
+    ValueGreyscaleImpl: Extends the AGreyscale abstract class.
+        Converts an image into greyscale using the highest component of rgb. Used by the ProcessorModel.
+
+    ColorTransform: This represents an interface that can preform transform operations on images.
+        It contains one method that transforms the images.
+    ColorTransformImpl: Implements the ColorTransform interface.
+        Used to change transform an image based on a given array of values.
+
+    Filter: This represents an interface that can apply filters to images.
+        It contains one method that applies the filters.
+    FilterImpl: Implements the Filter interface. Used to apply filters to images.
+
+Changes:
+Added the filter and ColorTransform classes/interfaces, Implemented BetterProcessorModel to work
+with the new Classes and interfaces. Updated ProcessorController to support the new commands of
+greyscale, sepia, blur, and sharpen. Additionally, we moved the savePPM out of the model and into
+the utils class. We also added the ability to support more file types such as png, jpg, and bmp.

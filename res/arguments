@@ -1,0 +1,17 @@
+load res/pigeon.ppm pigeon
+brighten 10 pigeon pigeon-brighter
+vertical-flip pigeon vert-pigeon
+horizontal-flip vert-pigeon pigeon-vert-horiz
+value-component vert-pigeon grey-vert-pigeon
+red-component pigeon red-pigeon
+green-component pigeon green-pigeon
+blue-component pigeon blue-pigeon
+greyscale pigeon luma-pigeon
+sepia pigeon sepia-pigeon
+blur pigeon blur-pigeon
+sharpen pigeon sharp-pigeon
+save resultImages/bright-pigeon.ppm pigeon-brighter
+save resultImages/vert-pigeon.ppm vert-pigeon
+save resultImages/pigeon-vert-horiz.ppm pigeon-vert-horiz
+save resultImages/grey-vert-pigeon.ppm grey-vert-pigeon
+load res/redGreyPigeon.ppm pigeon
